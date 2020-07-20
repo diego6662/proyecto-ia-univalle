@@ -2,18 +2,18 @@ import pygame
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.x = 45
-        self.y = 45
+        self.x = -999
+        self.y = -999
         self.radius = 10
         
         self.velocity_x = 0
         self.velocity_y = 0
-        self.image = pygame.Rect(self.x,self.y,10,10) 
+        self.image = pygame.Rect(self.x - 10,self.y - 10,20,20) 
        
     def update(self):
         self.x += self.velocity_x
         self.y += self.velocity_y
-        self.image = pygame.Rect(self.x,self.y,10,10)
+        self.image = pygame.Rect(self.x - 10,self.y - 10,20,20)
         
     def draw_pacman(self,screen,direction = None):
         

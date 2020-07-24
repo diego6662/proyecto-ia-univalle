@@ -11,6 +11,8 @@ class mapa():
         muros = []
         x = 0
         y = 0
+        iter_row = 0
+        iter_col = 0
         for row in walls:
             for wall in row:
                 if wall == "X":
@@ -18,10 +20,14 @@ class mapa():
                 elif wall == "P":
                     player.x = x + 15
                     player.y = y + 15
-                
+                    player.i = iter_row
+                    player.j = iter_col
                 x += 30
+                iter_col += 1
             x = 0
+            iter_col = 0
             y += 30
+            iter_row += 1
         self.block = muros
     def draw_wall(self,screen):
         for i in self.block:

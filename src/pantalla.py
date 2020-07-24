@@ -1,3 +1,4 @@
+import numpy as np
 import pygame
 from Player import Player
 from mapa import mapa
@@ -8,20 +9,22 @@ def main():
     wall = open("/home/diego/Desktop/universidad/7-semestre/IA/proyecto/resources/mapa1.txt").read()
     walls = wall.split("\n")
     clock = pygame.time.Clock()
+    row,column = len(walls),len(walls[0])
+    matrix = np.zeros((row,column),dtype = str)
+    for i in range(row):
+        for j in range(column):
+            matrix[i,j] = walls[i][j]
     FPS = 60
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
-    player = Player()
+    player = Player(matrix)
     mapa_game = mapa()
     mapa_game.construir_mapa(walls,player)
 
     running = True
     while running:
         clock.tick(FPS)# Returns milliseconds between each call to 'tick'. The convert time to seconds.
-        screen.fill(BLACK) # Fill the screen with background color.
-        
-        
-        
+        screen.fill(BLACK) # Fill the screen with background color.    
         for event in pygame.event.get():
             movement = None
             if event.type == pygame.QUIT:
@@ -41,16 +44,12 @@ def main():
                     player.velocity_x += 30
             elif  event.type == pygame.KEYUP:
                 if event.key == pygame.K_w:
-                
                     player.velocity_y = 0 
                 elif event.key == pygame.K_s:
-                    
                     player.velocity_y = 0
                 elif event.key == pygame.K_a:
-                    
                     player.velocity_x = 0
                 elif event.key == pygame.K_d:
-                    
                     player.velocity_x = 0 
         player.update()
         for i in mapa_game.block:
@@ -68,6 +67,7 @@ def main():
         pygame.display.update() # Or pygame.display.flip()
         pygame.time.delay(30)
     print("Exited the game loop. Game will quit...")
+    print(player.space)
     quit() # Not actually necessary since the script will exit anyway
 if __name__ == "__main__":
     main()

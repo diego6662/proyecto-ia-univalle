@@ -5,9 +5,10 @@ class mapa():
     Podria tener 16 bloques de ancho y 24 a lo largo en bloques de 30x30
     """
     def __init__(self):
-        
+        self.x_miss_pacman = None
+        self.y_miss_pacman = None
         self.block = None
-    def construir_mapa(self,walls,player):
+    def construir_mapa(self,walls,player,ghost):
         muros = []
         x = 0
         y = 0
@@ -22,7 +23,16 @@ class mapa():
                     player.y = y + 15
                     player.i = iter_row
                     player.j = iter_col
-                x += 30
+                elif wall == "G":
+                    ghost.x = x + 15 
+                    ghost.y = y + 15
+                    ghost.i = iter_row
+                    ghost.j = iter_col
+                elif wall == "M":
+                    player.goal = (iter_row,iter_col)
+                    self.x_miss_pacman = x + 15
+                    self.y_miss_pacman = y + 15
+                x += 30 
                 iter_col += 1
             x = 0
             iter_col = 0
@@ -32,5 +42,4 @@ class mapa():
     def draw_wall(self,screen):
         for i in self.block:
             pygame.draw.rect(screen,(0,0,255),i)
-
-        
+        pygame.draw.circle(screen,(255,192,203),(self.x_miss_pacman,self.y_miss_pacman),10)       

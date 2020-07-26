@@ -2,6 +2,7 @@ import numpy as np
 import pygame
 from Player import Player
 from mapa import mapa
+from ghost import Ghost
 def main():
     successes, failures = pygame.init()
     print("Initializing pygame: {0} successes and {1} failures.".format(successes, failures))
@@ -9,7 +10,7 @@ def main():
     wall = open("/home/diego/Desktop/universidad/7-semestre/IA/proyecto/resources/mapa1.txt").read()
     walls = wall.split("\n")
     clock = pygame.time.Clock()
-    row,column = len(walls),len(walls[0])
+    row,column = len(walls) - 1,len(walls[0])
     matrix = np.zeros((row,column),dtype = str)
     for i in range(row):
         for j in range(column):
@@ -18,56 +19,29 @@ def main():
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
     player = Player(matrix)
+    ghost = Ghost(matrix) 
     mapa_game = mapa()
-    mapa_game.construir_mapa(walls,player)
+    mapa_game.construir_mapa(walls,player,ghost)
 
     running = True
     while running:
-        clock.tick(FPS)# Returns milliseconds between each call to 'tick'. The convert time to seconds.
-        screen.fill(BLACK) # Fill the screen with background color.    
+        clock.tick(FPS)
+        screen.fill(BLACK)        
         for event in pygame.event.get():
-            movement = None
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_w:
-                    movement = "up"
-                    player.velocity_y -= 30
-                elif event.key == pygame.K_s:
-                    movement = "down"
-                    player.velocity_y += 30
-                elif event.key == pygame.K_a:
-                    movement = "left"
-                    player.velocity_x -= 30
-                elif event.key == pygame.K_d:
-                    movement = "rigth"
-                    player.velocity_x += 30
-            elif  event.type == pygame.KEYUP:
-                if event.key == pygame.K_w:
-                    player.velocity_y = 0 
-                elif event.key == pygame.K_s:
-                    player.velocity_y = 0
-                elif event.key == pygame.K_a:
-                    player.velocity_x = 0
-                elif event.key == pygame.K_d:
-                    player.velocity_x = 0 
+
         player.update()
-        for i in mapa_game.block:
-            if player.image.colliderect(i):
-                player.x -= player.velocity_x 
-                player.y -= player.velocity_y
-        
-        screen.fill(BLACK)
+       
         pygame.time.delay(30)
         mapa_game.draw_wall(screen)
         pygame.time.delay(30)
-        
-        player.draw_pacman(screen,movement)
+        player.draw_pacman(screen)
+        #ghost.draw_ghost(screen)
         pygame.time.delay(30)
-        pygame.display.update() # Or pygame.display.flip()
+        pygame.display.update()
         pygame.time.delay(30)
-    print("Exited the game loop. Game will quit...")
-    print(player.space)
-    quit() # Not actually necessary since the script will exit anyway
+        player.greedy_search()
+    quit() 
 if __name__ == "__main__":
     main()

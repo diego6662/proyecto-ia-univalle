@@ -7,6 +7,7 @@ def main():
     successes, failures = pygame.init()
     print("Initializing pygame: {0} successes and {1} failures.".format(successes, failures))
     screen = pygame.display.set_mode((720, 480))
+    #wall = open ("/home/daniel/Escritorio/IA/resources/mapa1.txt")
     wall = open("/home/diego/Desktop/universidad/7-semestre/IA/proyecto/resources/mapa1.txt").read()
     walls = wall.split("\n")
     clock = pygame.time.Clock()

@@ -6,12 +6,9 @@ from ghost import Ghost
 def main():
     successes, failures = pygame.init()
     screen = pygame.display.set_mode((720, 480))
-<<<<<<< HEAD
-=======
     #wall = open ("/home/daniel/Escritorio/IA/resources/mapa1.txt")
     wall = open("/home/diego/Desktop/universidad/7-semestre/IA/proyecto/resources/mapa1.txt").read()
     walls = wall.split("\n")
->>>>>>> 14316bc3fd7114f423d90cb2b6008f8959d70b5e
     clock = pygame.time.Clock()
     FPS = 60
     BLACK = (0, 0, 0)
@@ -40,13 +37,13 @@ def main():
         ghost.draw_ghost(screen)
         #pygame.time.delay(30)
         pygame.display.update()
-        pygame.time.delay(30)
+        #pygame.time.delay(30)
         win = player.greedy_search()
         loose = ghost.deep_search()
         screen.fill(BLACK)
         player.update()
         ghost.update()
-        pygame.time.delay(30)
+        #pygame.time.delay(30)
         mapa_game.draw_wall(screen)
         player.draw_pacman(screen)
         ghost.draw_ghost(screen)

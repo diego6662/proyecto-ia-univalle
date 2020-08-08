@@ -27,21 +27,31 @@ def main():
     while running:
         clock.tick(FPS)
         screen.fill(BLACK)        
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
+        
+        player.change_space(matrix)
         player.update()
-       
+        ghost.update()
         pygame.time.delay(30)
         mapa_game.draw_wall(screen)
         pygame.time.delay(30)
         player.draw_pacman(screen)
-        #ghost.draw_ghost(screen)
+        ghost.draw_ghost(screen)
         pygame.time.delay(30)
         pygame.display.update()
         pygame.time.delay(30)
-        player.greedy_search()
+        a = player.greedy_search()  
+        if a:
+            break
+        matrix = player.return_space()
+        ghost.change_space(matrix)
+        a = ghost.deep_search()
+        if a:
+            break
+        matrix = ghost.return_space()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                
     quit() 
 if __name__ == "__main__":
     main()

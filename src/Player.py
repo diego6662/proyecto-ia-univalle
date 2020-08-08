@@ -12,11 +12,17 @@ class Player(pygame.sprite.Sprite):
         self.velocity_x = 0
         self.velocity_y = 0
         self.space = space
+     
     def update_space(self,i = 0,j = 0):
         self.space[self.i,self.j] = " "
-        self.i += i
-        self.j += j
+        self.i = i
+        self.j = j
         self.space[self.i, self.j] = "P"
+    def return_space(self):
+        return self.space
+    def change_space(self,space):
+        self.space = space
+    
     def update(self):
         self.x = self.j * 30 + 15
         self.y = self.i * 30 + 15
@@ -27,6 +33,7 @@ class Player(pygame.sprite.Sprite):
         i,j = self.i, self.j
         if i == self.goal[0] and j == self.goal[1] :
             print("you found a miss pacman")
+            return True
         possiblilyties = [(i,j - 1),(i,j + 1),(i - 1,j),(i + 1,j)]
         best_way = [self.heuristic(possiblilyties[0]),self.heuristic(possiblilyties[1]),self.heuristic(possiblilyties[2]),self.heuristic(possiblilyties[3])]
         minimun = None
@@ -38,9 +45,9 @@ class Player(pygame.sprite.Sprite):
             elif best_way[ite] < minimun :
                 minimun = best_way[ite]
                 index = ite
-        self.i = possiblilyties[index][0]
-        self.j = possiblilyties[index][1]
-                
+        
+        self.update_space(possiblilyties[index][0],possiblilyties[index][1])
+        return False        
 
 
     def heuristic(self,coordinates):

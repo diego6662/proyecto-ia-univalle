@@ -11,19 +11,11 @@ class Ghost(pygame.sprite.Sprite):
         self.visited = []
         
     def update_space(self,i = 0,j = 0):
-<<<<<<< HEAD
         #mapa.matrix[self.i,self.j] = " "
         self.i = i
         self.j = j
         mapa.ghost = (self.i,self.j) 
         #mapa.matrix[self.i, self.j] = "G"
-=======
-        mapa.matrix[self.i,self.j] = " "
-        self.i = i
-        self.j = j
-        mapa.ghost = (self.i,self.j) 
-        mapa.matrix[self.i, self.j] = "G"
->>>>>>> 32c821da84051cf26311b892e0064b346441fc22
     def return_space(self):
         return self.space
     def change_space(self,space):
@@ -37,13 +29,6 @@ class Ghost(pygame.sprite.Sprite):
     def deep_search(self,i = None,j = None,recursion = None):
         if i == None and j == None:
             i,j = self.i,self.j
-            if i == mapa.pacman[0] and j == mapa.pacman[1]:
-<<<<<<< HEAD
-                self.update_space(i, j)
-=======
->>>>>>> 32c821da84051cf26311b892e0064b346441fc22
-                print('game over')
-                return True
             self.visited.append((i,j))
             possibility = [(i,j - 1),(i,j + 1),(i - 1,j),(i + 1,j)]
             deep_walk = [self.deep_move(possibility[0]),self.deep_move(possibility[1]) + 1,self.deep_move(possibility[2]) + 2,self.deep_move(possibility[3]) + 3]
@@ -73,11 +58,7 @@ class Ghost(pygame.sprite.Sprite):
             return minimun 
 
 
-<<<<<<< HEAD
     def deep_move(self,coordinates,recursion = 10):
-=======
-    def deep_move(self,coordinates,recursion = 7):
->>>>>>> 32c821da84051cf26311b892e0064b346441fc22
         if recursion == 0:
             if mapa.matrix[coordinates[0], coordinates[1]] == 'P':
                 return -999999

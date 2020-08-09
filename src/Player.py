@@ -75,11 +75,7 @@ class Player(pygame.sprite.Sprite):
 
             
 
-<<<<<<< HEAD
-    def heuristic(self,coordinates,recursion = 4):
-=======
-    def heuristic(self,coordinates,recursion = 7):
->>>>>>> 32c821da84051cf26311b892e0064b346441fc22
+    def heuristic(self,coordinates,recursion = 3):
         if recursion == 0:
             if mapa.matrix[coordinates[0], coordinates[1]] == "X":
                 return 99999

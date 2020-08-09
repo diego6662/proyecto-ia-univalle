@@ -20,44 +20,34 @@ def main():
     while running:
         clock.tick(FPS)
         screen.fill(BLACK)        
-        
-        player.update()
-        ghost.update()
-        pygame.time.delay(30)
-        mapa_game.draw_wall(screen)
-        #pygame.time.delay(30)
-        player.draw_pacman(screen)
-        ghost.draw_ghost(screen)
-        #pygame.time.delay(30)
-        pygame.display.update()
-        pygame.time.delay(30)
-        if player.x == ghost.x and player.y == ghost.y:
-            
-            loose = True
-        
-        win = player.greedy_search()
-        player.update()
-        loose = ghost.deep_search()
-        screen.fill(BLACK)
-        if player.x == ghost.x and player.y == ghost.y:
-            
-            loose = True
-        
-        ghost.update()
-        if player.x == ghost.x and player.y == ghost.y:
-            
-            loose = True
-        
-        pygame.time.delay(30)
-        mapa_game.draw_wall(screen)
-        player.draw_pacman(screen)
-        ghost.draw_ghost(screen)
-        pygame.display.update()
         if win:
             break
         if loose:
             print("Game over")
             break
+        player.update()
+        ghost.update()
+        pygame.time.delay(30)
+        mapa_game.draw_wall(screen)
+        #pygame.time.delay(30)
+        player.draw_pacman(screen)
+        ghost.draw_ghost(screen)
+        #pygame.time.delay(30)
+        pygame.display.update()
+        pygame.time.delay(30)
+        win = player.greedy_search()
+        player.update()
+        loose = ghost.deep_search()
+        screen.fill(BLACK)
+        
+        ghost.update()
+        
+        pygame.time.delay(30)
+        mapa_game.draw_wall(screen)
+        player.draw_pacman(screen)
+        ghost.draw_ghost(screen)
+        pygame.display.update()
+        
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

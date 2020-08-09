@@ -28,6 +28,7 @@ class Ghost(pygame.sprite.Sprite):
        
     def deep_search(self,i = None,j = None,recursion = None):
         if i == None and j == None:
+            
             i,j = self.i,self.j
             self.visited.append((i,j))
             possibility = [(i,j - 1),(i,j + 1),(i - 1,j),(i + 1,j)]
@@ -41,6 +42,9 @@ class Ghost(pygame.sprite.Sprite):
                 elif deep_walk[i] < minimun:
                     minimun = deep_walk[i]
                     index = i
+            if mapa.matrix[possibility[index][0],possibility[index][1]] == "P":
+                self.update_space(possibility[index][0],possibility[index][1])
+                return True
             self.update_space(possibility[index][0],possibility[index][1])
             return False
         else:

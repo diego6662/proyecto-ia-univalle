@@ -4,7 +4,7 @@ class mapa():
     """
     Podria tener 16 bloques de ancho y 24 a lo largo en bloques de 30x30
     """
-    wall = open("../resources/mapa3.txt").read()
+    wall = open("resources/mapa4.txt").read()
     walls = wall.split("\n")
     row,column = len(walls) - 1,len(walls[0])
     matrix = np.zeros((row,column),dtype = str)

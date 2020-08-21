@@ -64,8 +64,6 @@ class Ghost(pygame.sprite.Sprite):
 
     def deep_move(self,coordinates,recursion = 8):
         if recursion == 0:
-           # if mapa.matrix[coordinates[0], coordinates[1]] == 'P':
-            #    return -999999
             if (coordinates in self.visited):
                 return 99
             elif mapa.matrix[coordinates[0],coordinates[1]] == 'X':

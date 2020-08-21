@@ -42,7 +42,7 @@ class Player(pygame.sprite.Sprite):
             self.visited.append((i,j))
             possiblilyties = [(i,j - 1),(i,j + 1),(i - 1,j),(i + 1,j)]
             routes = [self.A_start_implementation(possiblilyties[0]),self.A_start_implementation(possiblilyties[1]),self.A_start_implementation(possiblilyties[2]),self.A_start_implementation(possiblilyties[3])]
-            #print(routes)
+            print(routes)
             minumun = None
             index = None
             for i in range(4):
@@ -61,18 +61,22 @@ class Player(pygame.sprite.Sprite):
             routes = [self.A_start_implementation(possiblilyties[0],recursion - 1),self.A_start_implementation(possiblilyties[1], recursion - 1),self.A_start_implementation(possiblilyties[2], recursion - 1),self.A_start_implementation(possiblilyties[3],recursion - 1)]
             minumun = None
             for i in range(4):
+                if routes[i] >= 9999999999:
+                    minumun = routes[i]
+                    break
                 if minumun == None:
                     minumun = routes[i]
                 elif routes[i] < minumun:
                     minumun = routes[i]
             return minumun
 
-    def A_start_implementation(self,coordinates,recursion=9):
+    def A_start_implementation(self,coordinates,recursion=5):
         if recursion == 0:
             if coordinates == self.goal:
                 return -9999999  
             elif mapa.matrix[coordinates[0],coordinates[1]] == 'G':
                 return 9999999999 
+            
             elif mapa.matrix[coordinates[0],coordinates[1]] == "X":
                 return 9999999 
 
@@ -120,7 +124,7 @@ class Player(pygame.sprite.Sprite):
                 return -999999
             possiblilyties = [(i,j - 1),(i,j + 1), (i - 1,j),(i + 1,j)]
             best_way = [self.heuristic(possiblilyties[0],recursion - 1),self.heuristic(possiblilyties[1],recursion - 1),self.heuristic(possiblilyties[2],recursion - 1),self.heuristic(possiblilyties[3],recursion - 1)]
-            
+           #corregir busqueda avara esta explorando nodos innecesarios 
             minimun = None
             index = None
             for ite in range(4):
@@ -135,7 +139,7 @@ class Player(pygame.sprite.Sprite):
 
             
 
-    def heuristic(self,coordinates,recursion = 3):
+    def heuristic(self,coordinates,recursion = 4):
         if recursion == 0:
             if mapa.matrix[coordinates[0], coordinates[1]] == "X":
                 return 999999
@@ -152,6 +156,12 @@ class Player(pygame.sprite.Sprite):
             if mapa.matrix[coordinates[0], coordinates[1]] == 'X':
                 return 999999
 
-            return self.greedy_search(coordinates[0],coordinates[1],recursion)
+            x_1 = self.goal[1]
+            y_1 = self.goal[0]
+            x_2 = coordinates[1]
+            y_2 = coordinates[0]
+            distance = ((x_2 - x_1) ** 2) + ((y_2 - y_1) ** 2)
+            distance = np.sqrt(distance)
+            return distance + self.greedy_search(coordinates[0],coordinates[1],recursion)
 
 

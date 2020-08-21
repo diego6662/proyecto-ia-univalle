@@ -4,7 +4,7 @@ class mapa():
     """
     Podria tener 16 bloques de ancho y 24 a lo largo en bloques de 30x30
     """
-    wall = open("resources/mapa4.txt").read()
+    wall = open("resources/mapa3.txt").read()
     walls = wall.split("\n")
     row,column = len(walls) - 1,len(walls[0])
     matrix = np.zeros((row,column),dtype = str)
@@ -38,7 +38,7 @@ class mapa():
                     ghost.x = x + 15 
                     ghost.y = y + 15
                     ghost.i = iter_row
-                    ghost.j = iter_col
+                    ghost.j = iter_col              
                 elif wall == "M":
                     player.goal = (iter_row,iter_col)
                     self.x_miss_pacman = x + 15
@@ -53,4 +53,4 @@ class mapa():
     def draw_wall(self,screen):
         for i in self.block:
             pygame.draw.rect(screen,(0,0,255),i)
-        pygame.draw.circle(screen,(255,192,203),(self.x_miss_pacman,self.y_miss_pacman),10)       
+        pygame.draw.circle(screen,(255,192,203),(self.x_miss_pacman,self.y_miss_pacman),10)        

@@ -31,8 +31,8 @@ def main():
             print("Game over")
             break
         if not scream:
-            scream_number = np.random.randint(1, 10)
-            scream_probability = True if scream_number <= 3 else False
+            scream_number = np.random.randint(1, 100)
+            scream_probability =  scream_number <= 30 
             if scream_probability:
                 player.A_start = True
                 screen.blit(text,(0,0))
@@ -62,8 +62,6 @@ def main():
         player.draw_pacman(screen)
         ghost.draw_ghost(screen)
         pygame.display.update()
-        
-        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False

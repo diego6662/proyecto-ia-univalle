@@ -56,8 +56,8 @@ class Ghost():
 
     # Dibuja el fantasma en el mapa
     def draw_ghost(self, screen):
-        #pygame.draw.circle(screen,(0,255,255),(self.x, self.y),10)
-        pygame.draw.rect(screen,(0,255,255),(self.x - 5, self.y - 5,20,20))
+        pygame.draw.circle(screen,(0,255,255),(self.x, self.y),10)
+        pygame.draw.rect(screen,(0,255,255),(self.x - 10, self.y - 4,20,14))
     
     # Implement the deep search 
     def deep_search(self,i = None,j = None,recursion = None):        

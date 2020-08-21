@@ -1,32 +1,66 @@
-import pygame
-import numpy as np
+#imports 
+import pygame # allow graphic interfaz
+import numpy as np # allow manager Matrix and use aritmethic operatios
+
+#internal import to use the mapa
+# como se importa mapa
+# las variables estaticas de el se convierten en globales
+# para que los objetos las visualicen
+
 from mapa import mapa
-class Ghost(pygame.sprite.Sprite):
+
+
+"""
+    this class represent the Ghost enemy:
+    implement srch: 
+"""
+class Ghost():
     def __init__(self):
-        super().__init__
+        # la inicion el fantasma no posee posicion
         self.x = None
         self.y = None
         self.i = None
         self.j = None
+
+        ## nodos viditados
         self.visited = []
-        
+    
+
+    ## this function updte 
+    ## (number, number) -> 
+    ## copia 
     def update_space(self,i = 0,j = 0):
-        mapa.matrix[self.i,self.j] = " "
+        # limpia la posición con respecto a la posicion 
+        # presente para cambiarla
+        mapa.matrix[self.i,self.j] = " " 
+
+        # Actualzia las cordenadas con los parametros 
+        # que se reciben
         self.i = i
         self.j = j
-        mapa.ghost = (self.i,self.j) 
+
+        # Cambia la variable estatica para mapa
+        mapa.ghost = (self.i,self.j)  # -> ventaja, se utiliza para visualizar sin cargar
+
+        # donde existe el fantasma 
+        # se coloca una 'G', para que el mapeo grafico lo 
+        # reconozca
         mapa.matrix[self.i, self.j] = "G"
-    def return_space(self):
-        return self.space
-    def change_space(self,space):
-        self.space = space
+
+
+    # genera el escalado para el dibujo en la parte grafica 
+    # dandole al fantasma un perimetor de 30x30 y centrando su posicion
     def update(self):
         self.x = self.j * 30 + 15
         self.y = self.i * 30 + 15
-    def draw_ghost(self, screen,move = None):
-        pygame.draw.circle(screen,(0,255,255),(self.x, self.y),10)
-       
-    def deep_search(self,i = None,j = None,recursion = None):
+
+    # Dibuja el fantasma en el mapa
+    def draw_ghost(self, screen):
+        #pygame.draw.circle(screen,(0,255,255),(self.x, self.y),10)
+        pygame.draw.rect(screen,(0,255,255),(self.x - 5, self.y - 5,20,20))
+    
+    # Implement the deep search 
+    def deep_search(self,i = None,j = None,recursion = None):        
         if i == None and j == None:
             
             i,j = self.i,self.j

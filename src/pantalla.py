@@ -58,8 +58,8 @@ def main():
             break
         if not scream:
             #probabilidad 
-            scream_number = np.random.randint(1, 10)
-            scream_probability =  1 <= 3 
+            scream_number = np.random.randint(1, 11)
+            scream_probability =  scream_number <= 3 
             if scream_probability:
                 player.A_start = True
                 screen.blit(text,(0,0))

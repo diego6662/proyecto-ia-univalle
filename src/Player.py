@@ -21,7 +21,6 @@ class Player():
         self.A_start = False 
         self.costo_mov = 1
         self.visited = []
-        self.visited_a_start = []
         self.espinaca = False
 
     #CACTUALIZAR EL POSICIONAMIENTO

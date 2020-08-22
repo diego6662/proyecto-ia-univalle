@@ -95,7 +95,7 @@ class Ghost():
 
             # verificar si estoy en la meta
             if(mapa.matrix[nodo.pos[0],nodo.pos[1] ] == "P" ):
-                print("DIRECCION",nodo.origin)
+                
                 iteerar = False
                 return nodo.origin
 
@@ -155,7 +155,7 @@ class Ghost():
 
             #en caos de que no se pueda mover porque no hay solucion
             if(cola == []):
-                #print("SIN salida")
+                print("SIN salida")
                 #iteerar = False
                 return ""
             
@@ -173,7 +173,7 @@ class Ghost():
     def uniform_move(self,screen):
         # se extrae el movimiento a realizar para llegar a lka
         # solcuion
-        print("cord init - ",(self.i,self.j))
+        
         direction = self.uniform_search()
 
         #limpiar pos anterior
@@ -204,9 +204,6 @@ class Ghost():
         self.y = self.i * 30 + 15
 
         # si se encuentra con el pacman o lo alcanza
-        print ((self.i,self.j ) == mapa.pacman)
-        if((self.i,self.j ) == mapa.pacman):
-            pygame.time.delay(200)
         
         return (self.i,self.j ) == mapa.pacman
             

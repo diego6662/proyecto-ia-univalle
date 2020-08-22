@@ -4,13 +4,13 @@ X XXXXXXXXXXXXXXXXXXXXXX
 X                      X
 XXXXXXXXXXXXXXX XXXXXXXX
 X                      X
-XXXXXXXXXXXXXXX XX XXXXX
-X               X      X
-X       X       XXXXXXGX
+XXXXXXXXXXXXXXX XXXXXXXX
+X               X     GX
+X       X       XXX X  X
 XXXXXXXXX XXXXX X   X  X
 X       X       X X P  X
 X XXXXX XXXXXXX XXXXXX X
 X               X      X
 X XXXXXXXXXXXXXXXX XXXXX
-X                   S  X
+X              S       X
 XXXXXXXXXXXXXXXXXXXXXXXX

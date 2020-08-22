@@ -17,7 +17,7 @@ class mapa():
     # statics de los personajes
     pacman = (0,0)
     ghost = (999,999)
-    
+    espinaca_indicador =True
 
     # ugualando el mapa cargado a el mapa generado
     for i in range(row):
@@ -29,7 +29,7 @@ class mapa():
         self.y_miss_pacman = None
         self.block = None
         self.espinaca = (0,0)
-        
+
     def construir_mapa(self,walls,player,ghost):
         muros = []
         #posicion de la matriz sw subujo
@@ -62,6 +62,7 @@ class mapa():
                 elif wall == "S": #spinach
                     
                     self.espinaca=(x+15,y+15)
+                    player.spinaca_positoin = (iter_row,iter_col)
 
                 x += 30 # por el escalado 
                 iter_col += 1
@@ -78,7 +79,7 @@ class mapa():
             pygame.draw.rect(screen,(0,0,255),i)
         pygame.draw.circle(screen,(255,192,203),(self.x_miss_pacman,self.y_miss_pacman),10)        
         #pygame.draw.rect(screen,(69, 104, 4),(self.espinaca[0],self.espinaca[1],16, 20)) 
-        if(self.espinaca != None):
+        if(mapa.espinaca_indicador):
             pygame.draw.polygon(screen,(59, 206, 0), [(self.espinaca[0] + 8,self.espinaca[1] + 8),(self.espinaca[0] - 8,self.espinaca[1] + 8),(self.espinaca[0] ,self.espinaca[1] -8)] )
                
         

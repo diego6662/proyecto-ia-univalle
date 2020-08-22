@@ -51,14 +51,15 @@ def main():
         pygame.display.update()
 
         if win:
+            print("Pacman: Huuu!! I found you ...im making you el chicloso( ͡° ͜ʖ ͡°) \n Miss Pacman: ヽ(＾Д＾)ﾉ")
             break
         if loose:
             print("Game over")
             break
         if not scream:
             #probabilidad 
-            scream_number = np.random.randint(1, 1000)
-            scream_probability =  100 <= 30 
+            scream_number = np.random.randint(1, 10)
+            scream_probability =  1 <= 3 
             if scream_probability:
                 player.A_start = True
                 screen.blit(text,(0,0))
@@ -69,20 +70,24 @@ def main():
         
         trya += 1
         
-       
-        win = player.search()
-        player.update()
+        # move pacman
+        #win = player.search()
         
+        win = player.search(screen)
+        # move gosth
         loose = ghost.uniform_move(screen)
-        screen.fill(BLACK)
         
+        
+        # seccion de dibujo
+        screen.fill(BLACK)
+        player.update()
         ghost.update()
         mapa_game.draw_wall(screen)
         player.draw_pacman(screen)
         ghost.draw_ghost(screen)
         pygame.display.update()
 
-        pygame.time.delay(100)
+        pygame.time.delay(500)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False

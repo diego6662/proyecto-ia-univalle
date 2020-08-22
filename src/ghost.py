@@ -23,11 +23,11 @@ class Ghost():
         self.i = None
         self.j = None
 
-        ## nodos viditados
+        ## nodos visitados
         self.visited = []
     
 
-    ## this function updte the position
+    ## this function update the position
     ## (number, number) -> 
     ## copia 
     def update_space(self,i = 0,j = 0):
@@ -173,7 +173,7 @@ class Ghost():
     def uniform_move(self,screen):
         # se extrae el movimiento a realizar para llegar a lka
         # solcuion
-        
+        self.visited.append((self.i,self.j))
         direction = self.uniform_search()
 
         #limpiar pos anterior
@@ -200,8 +200,7 @@ class Ghost():
         mapa.matrix[self.i, self.j] = "G"
 
         #redimenciona las varialbes de dibujo
-        self.x = self.j * 30 + 15
-        self.y = self.i * 30 + 15
+        self.update()
 
         # si se encuentra con el pacman o lo alcanza
         

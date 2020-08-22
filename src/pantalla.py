@@ -5,7 +5,7 @@ import pygame
 from Player import Player
 from mapa import mapa
 from ghost import Ghost
-
+from tree import Tree
 # main
 def main():
     # load, screeem
@@ -71,7 +71,6 @@ def main():
         trya += 1
         
         # move pacman
-        #win = player.search()
         
         win = player.search(screen)
         # move gosth
@@ -92,7 +91,10 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
         #input()
-    print(player.visited)
+    arbol_pacman = Tree(player.visited)
+    arbol_pacman.printer("Pacman")
+    arbol_ghost = Tree(ghost.visited)
+    arbol_ghost.printer("Fantasma")
     quit()     
     # MAIN
 if __name__ == "__main__":

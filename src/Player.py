@@ -76,7 +76,7 @@ class Player():
 
             # verificar si estoy en la meta
             if(mapa.matrix[nodo.pos[0],nodo.pos[1] ] == "M" ):
-                print("DIRECCION",nodo.origin)
+                #print("DIRECCION",nodo.origin)
                 iteerar = False
                 return nodo.origin
 
@@ -202,13 +202,14 @@ class Player():
         if (self.A_start):
             distance += self.costo_mov
             #probe
-            x_1 = mapa.ghost[1]
+            """x_1 = mapa.ghost[1]
             y_1 = mapa.ghost[0]
             x_2 = coordinates[1] 
             y_2 = coordinates[0]
             distancia_g = ((x_2 - x_1) ** 2) + ((y_2 - y_1) ** 2)
             distancia_g = np.sqrt(distancia_g)
             distance -= distancia_g
+            """
             #corrobora que el nodo no sea uno ya visitado si es un nodo visitado el costo de devolverse es mayor al movimiento normal
             if (y_2,x_2) in self.visited:
                 distance += 10

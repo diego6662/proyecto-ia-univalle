@@ -204,5 +204,7 @@ class Ghost():
 
         # si se encuentra con el pacman o lo alcanza
         
-        return (self.i,self.j ) == mapa.pacman
+        if (self.i,self.j ) == mapa.pacman:
+            self.visited.append((self.i, self.j))
+            return True
             

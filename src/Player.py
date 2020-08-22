@@ -183,7 +183,9 @@ class Player():
         self.update()
         # si se encuentra con el pacman o lo alcanza
         
-        return (self.i,self.j ) == self.goal
+        if(self.i,self.j ) == self.goal:
+            self.visited.append((self.i,self.j))
+            return True
             
 
             

@@ -87,11 +87,12 @@ def main():
         ghost.draw_ghost(screen)
         pygame.display.update()
 
-        pygame.time.delay(500)
+        pygame.time.delay(300)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
         #input()
+    print(player.visited)
     quit()     
     # MAIN
 if __name__ == "__main__":

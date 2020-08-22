@@ -1,17 +1,15 @@
-from Nodo import Nodo
+import networkx as nx
+import matplotlib.pyplot as plt
+from Nodo import Nodo 
+G = nx.Graph()
 
-a = Nodo(None,None,2,"a")
-b = Nodo(None,None,1,"b")
-c = Nodo(None,None,4,"c")
+a = Nodo((1,2),None,2,"Arribas")
+b = Nodo((1,3),a,32,"Abajo")
+azul = ["red"] + ["blue"]*1 
 
-cola = []
-
-cola = Nodo.insertN(c,cola)
-cola = Nodo.insertN(b,cola)
-cola = Nodo.insertN(a,cola)
-
-if(1==1):
-    if(True):
-        break
-    print("algo")
-print("otracosa")
+G.add_node(str(a),color="1,23,2")
+G.add_node(str(b))
+G.add_edge(str(a), str(b))
+nx.draw(G,with_labels=True,node_color=azul)
+plt.draw()
+plt.show()

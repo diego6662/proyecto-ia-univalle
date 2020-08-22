@@ -91,6 +91,7 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
         #input()
+    #print(len(player.visited),len(ghost.visited))
     arbol_pacman = Tree(player.visited)
     arbol_pacman.printer("Pacman")
     arbol_ghost = Tree(ghost.visited)

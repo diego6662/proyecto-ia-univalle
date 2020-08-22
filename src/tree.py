@@ -11,10 +11,14 @@ class Tree():
 
         colors = ["red"] + ["blue"] * (len(self.node) - 2) + ['yellow']
         nodes = self.node
-        G.add_node(str(nodes[0]))
+        first = f"1-{nodes[0]}"
+        G.add_node(first)
         for i in range(1,len(self.node)):
-            G.add_node(str(nodes[i]))
-            G.add_edge(str(nodes[i - 1]),str(nodes[i]))
+            actual_node = f"{i + 1}-{nodes[i]}"
+            G.add_node(actual_node)
+            past_node = f"{i}-{nodes[i - 1]}"
+
+            G.add_edge(past_node,actual_node)
        
         nx.draw(G,with_labels=True,node_color=colors)
         

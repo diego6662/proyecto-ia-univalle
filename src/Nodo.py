@@ -26,6 +26,7 @@ class Nodo():
         #self.padre = padre
         self.valAc = valAc
         self.origin = origin # este tributo es el origen de toda la rama
+        self.movC = 0 #costo de moverse caso urgente
 
     # overloading oppes
 
@@ -41,10 +42,12 @@ class Nodo():
         return (self.pos == nodo2.pos)
 
     def __repr__(self):         
-        return " NODO[" + str(self.pos)+", "+str(self.valAc) +", "+str(self.origin)+ "] "
+        return str(self.pos) 
+        #return  "[" + str(self.pos)+",V "+str(self.valAc) + "]"
 
     def __str__(self):
-        return " NODO[" + str(self.pos)+", "+str(self.valAc) +", "+str(self.origin)+ "] "
+        return str(self.pos) 
+        #return  "[" + str(self.pos)+",V "+str(self.valAc) + "]"
 
    
 

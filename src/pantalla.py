@@ -5,7 +5,10 @@ import pygame
 from Player import Player
 from mapa import mapa
 from ghost import Ghost
-from tree import Tree
+
+import networkx as nx
+import matplotlib.pyplot as plt
+from Nodo import Nodo 
 # main
 def main():
     # load, screeem
@@ -86,16 +89,21 @@ def main():
         ghost.draw_ghost(screen)
         pygame.display.update()
 
-        pygame.time.delay(300)
+        pygame.time.delay(100)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        #input()
+        # input()
     #print(len(player.visited),len(ghost.visited))
-    arbol_pacman = Tree(player.visited)
-    arbol_pacman.printer("Pacman")
-    arbol_ghost = Tree(ghost.visited)
-    arbol_ghost.printer("Fantasma")
+
+    # colors = ["red"] + ["blue"] * (player.cont-1) + ['yellow']
+    # nx.draw(player.arbol_panic,with_labels=True,node_color=colors)
+    # plt.draw()
+    # plt.show()
+    # arbol_pacman = Tree(player.visited)
+    # arbol_pacman.printer("Pacman")
+    # arbol_ghost = Tree(ghost.visited)
+    # arbol_ghost.printer("Fantasma")
     quit()     
     # MAIN
 if __name__ == "__main__":

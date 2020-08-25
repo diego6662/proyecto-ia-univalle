@@ -5,6 +5,8 @@ from mapa import mapa
 from Nodo import Nodo
 # THIS CALASS ALLOW VREATE THE PACMAN
 # HOW A NEW AGENTE
+import networkx as nx
+import matplotlib.pyplot as plt
 class Player():
     def __init__(self):
         #CODENADAS DE POOSICION
@@ -23,6 +25,8 @@ class Player():
        #se crea una lista en la cual se guarda todos los nodos visitados
         self.visited = []
         self.espinaca = False
+        self.arbol_panic = nx.Graph()
+        self.cont =0
 
     #ACTUALIZAR EL POSICIONAMIENTO
     def update_space(self,i = 0,j = 0):
@@ -70,8 +74,19 @@ class Player():
         cola = []
         #condicion de quiebre
         iteerar = True
+        # threee
+        #arbol_pacman = Tree(player.visited)
+        #arbol_pacman.printer("Pacman")
         
+
+        self.arbol_panic.add_node (str(nodo))
+
+
+        local_matrix[nodo.pos[0] ,nodo.pos[1] ] = "V"
+
         #iterar sobre la matriz 
+        
+        
         while(iteerar):
 
             # verificar si estoy en la meta
@@ -86,12 +101,23 @@ class Player():
                 if(local_matrix[nodo.pos[0] - 1,nodo.pos[1] ] != "V"):
                     
                     #puedo explorar
+                    nodoArr = Nodo((nodo.pos[0] - 1,nodo.pos[1] ),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] - 1,nodo.pos[1]) ),"arriba")
                     if(genera_origen):
-                        cola = Nodo.insertN( Nodo((nodo.pos[0] - 1,nodo.pos[1] ),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] - 1,nodo.pos[1]) ),"arriba"), cola)
+                        nodoArr = Nodo((nodo.pos[0] - 1,nodo.pos[1] ),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] - 1,nodo.pos[1]) ),"arriba")
+                        
                     else:
-                        cola = Nodo.insertN( Nodo((nodo.pos[0] - 1,nodo.pos[1] ),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] - 1,nodo.pos[1])),nodo.origin), cola)
+                        nodoArr = Nodo((nodo.pos[0] - 1,nodo.pos[1] ),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] - 1,nodo.pos[1]) ),nodo.origin)
+
+
+                    self.arbol_panic.add_node (str(nodoArr))
+                    self.arbol_panic.add_edge(str(nodo),str(nodoArr))
+                        
+                    cola = Nodo.insertN( nodoArr, cola)
+                    self.cont +=1
                     #visitar el nodo
-                    local_matrix[nodo.pos[0] - 1,nodo.pos[1] ] = "V" 
+                    local_matrix[nodo.pos[0] - 1,nodo.pos[1] ] = "V"
+
+                    
                         
 
             # DERECHA 
@@ -100,9 +126,17 @@ class Player():
 
                     #puedo explorar
                     if(genera_origen):
-                        cola = Nodo.insertN( Nodo((nodo.pos[0] ,nodo.pos[1] + 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] + 1) ),"derecha"), cola)
+                        nodoDer = Nodo((nodo.pos[0] ,nodo.pos[1] + 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] + 1) ),"derecha")
+                        
                     else:
-                        cola = Nodo.insertN( Nodo((nodo.pos[0] ,nodo.pos[1] + 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] + 1) ),nodo.origin), cola)
+                        nodoDer = Nodo((nodo.pos[0] ,nodo.pos[1] + 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] + 1) ),nodo.origin)
+
+                    
+                    self.arbol_panic.add_node (str(nodoDer))
+                    self.arbol_panic.add_edge(str(nodo),str(nodoDer))
+                    
+                    cola = Nodo.insertN( nodoDer, cola)
+                    self.cont +=1
                     #visitar el nodo
                     local_matrix[nodo.pos[0] ,nodo.pos[1] + 1] = "V" 
                         
@@ -113,9 +147,17 @@ class Player():
 
                     #puedo explorar
                     if(genera_origen):
-                        cola = Nodo.insertN( Nodo((nodo.pos[0] + 1,nodo.pos[1] ),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] + 1,nodo.pos[1])),"abajo"), cola)
+                        nodoAba = Nodo((nodo.pos[0] + 1,nodo.pos[1] ),nodo,nodo.movC + self.get_heuristic((nodo.pos[0] + 1,nodo.pos[1])),"abajo")
+                        
                     else:
-                        cola = Nodo.insertN( Nodo((nodo.pos[0] + 1,nodo.pos[1] ),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] + 1,nodo.pos[1])),nodo.origin), cola)
+                        nodoAba = Nodo((nodo.pos[0] + 1,nodo.pos[1] ),nodo,nodo.movC + self.get_heuristic((nodo.pos[0] + 1,nodo.pos[1])),nodo.origin)
+
+
+                    self.arbol_panic.add_node (str(nodoAba))
+                    self.arbol_panic.add_edge(str(nodo),str(nodoAba))
+                    
+                    cola = Nodo.insertN( nodoAba, cola)
+                    self.cont +=1
                     #visitar el nodo
                     local_matrix[nodo.pos[0] + 1,nodo.pos[1]] = "V" 
                     
@@ -127,9 +169,16 @@ class Player():
                                         
                     #puedo explorar
                     if(genera_origen):
-                        cola = Nodo.insertN( Nodo((nodo.pos[0] ,nodo.pos[1] - 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] - 1)),"izquierda"), cola)
+                        nodoIzq = Nodo((nodo.pos[0] ,nodo.pos[1] - 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] - 1)),"izquierda")
+                        
                     else:
-                        cola = Nodo.insertN( Nodo((nodo.pos[0] ,nodo.pos[1] - 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] - 1)),nodo.origin), cola)
+                        nodoIzq = Nodo((nodo.pos[0] ,nodo.pos[1] - 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] - 1)),nodo.origin)
+
+                    self.arbol_panic.add_node (str(nodoIzq))
+                    self.arbol_panic.add_edge(str(nodo),str(nodoIzq))
+                    
+                    cola = Nodo.insertN(nodoIzq , cola)
+                    self.cont +=1
                     #visitar el nodo
                     local_matrix[nodo.pos[0] ,nodo.pos[1] - 1] = "V" 
             
@@ -181,8 +230,15 @@ class Player():
 
         #redimenciona las varialbes de dibujo
         self.update()
+
+        colors = ["red"] + ["blue"] * (self.cont-1) + ['yellow']
+        nx.draw(self.arbol_panic,with_labels=True,node_color=colors)
+        plt.draw()
+        plt.show()
         # si se encuentra con el pacman o lo alcanza
-        
+        self.arbol_panic = None
+        self.arbol_panic = nx.Graph()
+        self.cont = 0
         if(self.i,self.j ) == self.goal:
             self.visited.append((self.i,self.j))
             return True
@@ -204,14 +260,14 @@ class Player():
         if (self.A_start):
             distance += self.costo_mov
             #probe
-            """x_1 = mapa.ghost[1]
+            x_1 = mapa.ghost[1]
             y_1 = mapa.ghost[0]
             x_2 = coordinates[1] 
             y_2 = coordinates[0]
             distancia_g = ((x_2 - x_1) ** 2) + ((y_2 - y_1) ** 2)
             distancia_g = np.sqrt(distancia_g)
-            distance -= distancia_g
-            """
+            distance /= distancia_g
+            
             #corrobora que el nodo no sea uno ya visitado si es un nodo visitado el costo de devolverse es mayor al movimiento normal
             if (y_2,x_2) in self.visited:
                 distance += 10

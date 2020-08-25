@@ -6,7 +6,7 @@ class mapa():
     Podria tener 16 bloques de ancho y 24 a lo largo en bloques de 30x30px
     """
     # LECTURA DEL ARCHIVO
-    wall = open("resources/mapa10.txt").read()
+    wall = open("resources/mapa3.txt").read()
     #SPLITS THE COLS
     walls = wall.split("\n")
     # inicializa 

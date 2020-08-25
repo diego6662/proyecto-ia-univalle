@@ -37,17 +37,17 @@ class Nodo():
     def __lt__(self,nodo2):
         return self.valAc < nodo2.valAc
 
-    # !=
+    """!="""
     def  __eq__(self,nodo2):
         return (self.pos == nodo2.pos)
 
     def __repr__(self):         
-        # return str(self.pos) 
-        return  "[" + str(self.pos)+",V "+str(self.valAc) + "]"
+         return str(self.pos) 
+        #return  "[" + str(self.pos)+",V "+str(self.valAc) + "]"
 
     def __str__(self):
-        # return str(self.pos) 
-        return  "[" + str(self.pos)+",V "+str(self.valAc) + "]"
+         return str(self.pos) 
+        # return  "[" + str(self.pos)+",V "+str(self.valAc) + "]"
 
    
 

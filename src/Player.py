@@ -27,7 +27,7 @@ class Player():
         self.espinaca = False
         self.arbol_panic = nx.Graph()
         self.cont =0
-        self.graph_three = False
+        self.graph_three = False #allowgraph tree
 
     #ACTUALIZAR EL POSICIONAMIENTO
     def update_space(self,i = 0,j = 0):
@@ -58,6 +58,7 @@ class Player():
                 return win
         
 
+    #this funcition allow  execute the search to misspacman
     def general_search(self):
         # mirar si es meta
         # expandir
@@ -91,7 +92,7 @@ class Player():
         while(iteerar):
 
             # verificar si estoy en la meta
-            if(mapa.matrix[nodo.pos[0],nodo.pos[1] ] == "M" ):
+            if(mapa.matrix[ nodo.pos[0],nodo.pos[1] ] == "M" ):
                 #print("DIRECCION",nodo.origin)
                 iteerar = False
                 return nodo.origin
@@ -123,7 +124,7 @@ class Player():
                     self.arbol_panic.add_node (str(nodoArr))
                     self.arbol_panic.add_edge(str(nodo),str(nodoArr))
 
-                    #encolar
+                    #encolar INSERT SORT
                     cola = Nodo.insertN( nodoArr, cola)
                     #contador de colores
                     self.cont +=1
@@ -199,10 +200,7 @@ class Player():
                     self.cont +=1
                     #visitar el nodo
                     local_matrix[nodo.pos[0] + 1,nodo.pos[1] ] = "V"
-
-           
-                    
-                        
+               
             
             # IZQUIERDA 
             if(mapa.matrix[nodo.pos[0] ,nodo.pos[1] - 1 ] != "X" and mapa.matrix[nodo.pos[0] ,nodo.pos[1] - 1] != "G"):
@@ -243,7 +241,7 @@ class Player():
             # input()
             #en caso de que no se pueda mover porque no hay solucion
             if(cola == []):
-                #print("SIN salida")
+                print("SIN salida")
                 #iteerar = False
                 return nodo.origin
             
@@ -253,6 +251,7 @@ class Player():
             cola = cola[1:] # resto de la cola
 
 
+    # execute the move
     def general_move(self,screen):
         # se extrae el movimiento a realizar para llegar a la
         # solcuion
@@ -261,7 +260,7 @@ class Player():
         mapa.matrix[self.goal[0],self.goal[1]] = "M"
         #Restore the 
 
-        self.visited.append((self.i, self.j))
+        self.visited.append((self.i, self.j))#nodos visitados
         direction = self.general_search()
 
         #limpiar pos anterior
@@ -330,10 +329,10 @@ class Player():
             y_2 = coordinates[0]
             distancia_g = ((x_2 - x_1) ** 2) + ((y_2 - y_1) ** 2)
             distancia_g = np.sqrt(distancia_g)
-            distance -= distancia_g*2
+            distance += distancia_g*2
             
         if(coordinates in self.visited):
-            distance += 10
+            distance += 2
         #     #corrobora que el nodo no sea uno ya visitado si es un nodo visitado el costo de devolverse es mayor al movimiento normal
         return (distance/2.0)
 

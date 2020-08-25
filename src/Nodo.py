@@ -42,12 +42,12 @@ class Nodo():
         return (self.pos == nodo2.pos)
 
     def __repr__(self):         
-        return str(self.pos) 
-        #return  "[" + str(self.pos)+",V "+str(self.valAc) + "]"
+        # return str(self.pos) 
+        return  "[" + str(self.pos)+",V "+str(self.valAc) + "]"
 
     def __str__(self):
-        return str(self.pos) 
-        #return  "[" + str(self.pos)+",V "+str(self.valAc) + "]"
+        # return str(self.pos) 
+        return  "[" + str(self.pos)+",V "+str(self.valAc) + "]"
 
    
 

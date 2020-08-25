@@ -27,6 +27,7 @@ class Player():
         self.espinaca = False
         self.arbol_panic = nx.Graph()
         self.cont =0
+        self.graph_three = False
 
     #ACTUALIZAR EL POSICIONAMIENTO
     def update_space(self,i = 0,j = 0):
@@ -101,18 +102,30 @@ class Player():
                 if(local_matrix[nodo.pos[0] - 1,nodo.pos[1] ] != "V"):
                     
                     #puedo explorar
-                    nodoArr = Nodo((nodo.pos[0] - 1,nodo.pos[1] ),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] - 1,nodo.pos[1]) ),"arriba")
+                    # generar o heredar origen
                     if(genera_origen):
-                        nodoArr = Nodo((nodo.pos[0] - 1,nodo.pos[1] ),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] - 1,nodo.pos[1]) ),"arriba")
-                        
+                        save_origen = "arriba"
                     else:
-                        nodoArr = Nodo((nodo.pos[0] - 1,nodo.pos[1] ),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] - 1,nodo.pos[1]) ),nodo.origin)
+                        save_origen = nodo.origin
 
+                    # heuristica condicional
+                    if (self.A_start):
+                        valor = self.get_heuristic((nodo.pos[0] - 1,nodo.pos[1]) ) + nodo.movC + self.costo_mov
+                    else:
+                        valor = self.get_heuristic((nodo.pos[0] - 1,nodo.pos[1]) )
 
+                    #crear nbodo
+                    nodoArr = Nodo((nodo.pos[0] - 1,nodo.pos[1] ),nodo,valor,save_origen)
+                    #costo acomulado de moverse
+                    nodoArr.movC = nodo.movC + self.costo_mov
+
+                    # arbol
                     self.arbol_panic.add_node (str(nodoArr))
                     self.arbol_panic.add_edge(str(nodo),str(nodoArr))
-                        
+
+                    #encolar
                     cola = Nodo.insertN( nodoArr, cola)
+                    #contador de colores
                     self.cont +=1
                     #visitar el nodo
                     local_matrix[nodo.pos[0] - 1,nodo.pos[1] ] = "V"
@@ -125,20 +138,33 @@ class Player():
                 if(local_matrix[nodo.pos[0] ,nodo.pos[1] + 1 ] != "V"):
 
                     #puedo explorar
+                    # generar o heredar origen
                     if(genera_origen):
-                        nodoDer = Nodo((nodo.pos[0] ,nodo.pos[1] + 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] + 1) ),"derecha")
-                        
+                        save_origen = "derecha"
                     else:
-                        nodoDer = Nodo((nodo.pos[0] ,nodo.pos[1] + 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] + 1) ),nodo.origin)
+                        save_origen = nodo.origin
 
+                    # heuristica condicional
+                    if (self.A_start):
+                        valor = self.get_heuristic((nodo.pos[0] ,nodo.pos[1] + 1) ) + nodo.movC + self.costo_mov
+                    else:
+                        valor = self.get_heuristic((nodo.pos[0] ,nodo.pos[1] + 1) )
+
+                    #crear nbodo
+                    nodoArr = Nodo((nodo.pos[0] ,nodo.pos[1] + 1),nodo,valor,save_origen)
+                    #costo acomulado de moverse
+                    nodoArr.movC = nodo.movC + self.costo_mov
+
+                    # arbol
+                    self.arbol_panic.add_node (str(nodoArr))
+                    self.arbol_panic.add_edge(str(nodo),str(nodoArr))
                     
-                    self.arbol_panic.add_node (str(nodoDer))
-                    self.arbol_panic.add_edge(str(nodo),str(nodoDer))
-                    
-                    cola = Nodo.insertN( nodoDer, cola)
+                    #encolar
+                    cola = Nodo.insertN( nodoArr, cola)
+                    #contador de colores
                     self.cont +=1
                     #visitar el nodo
-                    local_matrix[nodo.pos[0] ,nodo.pos[1] + 1] = "V" 
+                    local_matrix[nodo.pos[0] ,nodo.pos[1] + 1] = "V"
                         
 
             # ABAJO 
@@ -146,20 +172,35 @@ class Player():
                 if(local_matrix[nodo.pos[0] + 1,nodo.pos[1] ] != "V"):
 
                     #puedo explorar
+                    # generar o heredar origen
                     if(genera_origen):
-                        nodoAba = Nodo((nodo.pos[0] + 1,nodo.pos[1] ),nodo,nodo.movC + self.get_heuristic((nodo.pos[0] + 1,nodo.pos[1])),"abajo")
-                        
+                        save_origen = "abajo"
                     else:
-                        nodoAba = Nodo((nodo.pos[0] + 1,nodo.pos[1] ),nodo,nodo.movC + self.get_heuristic((nodo.pos[0] + 1,nodo.pos[1])),nodo.origin)
+                        save_origen = nodo.origin
 
+                    # heuristica condicional
+                    if (self.A_start):
+                        valor = self.get_heuristic((nodo.pos[0] + 1,nodo.pos[1]) ) + nodo.movC + self.costo_mov
+                    else:
+                        valor = self.get_heuristic((nodo.pos[0] + 1,nodo.pos[1] ) )
 
-                    self.arbol_panic.add_node (str(nodoAba))
-                    self.arbol_panic.add_edge(str(nodo),str(nodoAba))
+                    #crear nbodo
+                    nodoArr = Nodo((nodo.pos[0] + 1,nodo.pos[1] ),nodo,valor,save_origen)
+                    #costo acomulado de moverse
+                    nodoArr.movC = nodo.movC + self.costo_mov
+
+                    # arbol
+                    self.arbol_panic.add_node (str(nodoArr))
+                    self.arbol_panic.add_edge(str(nodo),str(nodoArr))
                     
-                    cola = Nodo.insertN( nodoAba, cola)
+                    #encolar
+                    cola = Nodo.insertN( nodoArr, cola)
+                    #contador de colores
                     self.cont +=1
                     #visitar el nodo
-                    local_matrix[nodo.pos[0] + 1,nodo.pos[1]] = "V" 
+                    local_matrix[nodo.pos[0] + 1,nodo.pos[1] ] = "V"
+
+           
                     
                         
             
@@ -168,21 +209,38 @@ class Player():
                 if(local_matrix[nodo.pos[0] ,nodo.pos[1] - 1 ] != "V"):
                                         
                     #puedo explorar
+                    # generar o heredar origen
                     if(genera_origen):
-                        nodoIzq = Nodo((nodo.pos[0] ,nodo.pos[1] - 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] - 1)),"izquierda")
-                        
+                        save_origen = "izquierda"
                     else:
-                        nodoIzq = Nodo((nodo.pos[0] ,nodo.pos[1] - 1),nodo,nodo.valAc + self.get_heuristic((nodo.pos[0] ,nodo.pos[1] - 1)),nodo.origin)
+                        save_origen = nodo.origin
 
-                    self.arbol_panic.add_node (str(nodoIzq))
-                    self.arbol_panic.add_edge(str(nodo),str(nodoIzq))
+                    # heuristica condicional
+                    if (self.A_start):
+                        valor = self.get_heuristic((nodo.pos[0] ,nodo.pos[1] - 1) ) + nodo.movC + self.costo_mov
+                    else:
+                        valor = self.get_heuristic((nodo.pos[0] ,nodo.pos[1] - 1) )
+
+                    #crear nbodo
+                    nodoArr = Nodo((nodo.pos[0] ,nodo.pos[1] - 1),nodo,valor,save_origen)
+                    #costo acomulado de moverse
+                    nodoArr.movC = nodo.movC + self.costo_mov
+
+                    # arbol
+                    self.arbol_panic.add_node (str(nodoArr))
+                    self.arbol_panic.add_edge(str(nodo),str(nodoArr))
                     
-                    cola = Nodo.insertN(nodoIzq , cola)
+                    #encolar
+                    cola = Nodo.insertN( nodoArr, cola)
+                    #contador de colores
                     self.cont +=1
                     #visitar el nodo
-                    local_matrix[nodo.pos[0] ,nodo.pos[1] - 1] = "V" 
+                    local_matrix[nodo.pos[0] ,nodo.pos[1] - 1] = "V"
+                    
             
-
+            # print(local_matrix)
+            # print(cola)
+            # input()
             #en caso de que no se pueda mover porque no hay solucion
             if(cola == []):
                 #print("SIN salida")
@@ -198,7 +256,11 @@ class Player():
     def general_move(self,screen):
         # se extrae el movimiento a realizar para llegar a la
         # solcuion
-        
+
+        #Restore the Misspacman position
+        mapa.matrix[self.goal[0],self.goal[1]] = "M"
+        #Restore the 
+
         self.visited.append((self.i, self.j))
         direction = self.general_search()
 
@@ -231,14 +293,17 @@ class Player():
         #redimenciona las varialbes de dibujo
         self.update()
 
-        colors = ["red"] + ["blue"] * (self.cont-1) + ['yellow']
-        nx.draw(self.arbol_panic,with_labels=True,node_color=colors)
-        plt.draw()
-        plt.show()
-        # si se encuentra con el pacman o lo alcanza
-        self.arbol_panic = None
-        self.arbol_panic = nx.Graph()
-        self.cont = 0
+        if(self.graph_three):
+            colors = ["red"] + ["blue"] * (self.cont-1) + ['yellow']
+            nx.draw(self.arbol_panic,with_labels=True,node_color=colors)
+            plt.draw()
+            plt.show()
+            # si se encuentra con el pacman o lo alcanza
+            self.arbol_panic = None
+            self.arbol_panic = nx.Graph()
+            self.cont = 0
+
+
         if(self.i,self.j ) == self.goal:
             self.visited.append((self.i,self.j))
             return True
@@ -258,19 +323,18 @@ class Player():
         distance = np.sqrt(distance)
         # return distance / 2
         if (self.A_start):
-            distance += self.costo_mov
-            #probe
+            # distancia a el fantasma
             x_1 = mapa.ghost[1]
             y_1 = mapa.ghost[0]
             x_2 = coordinates[1] 
             y_2 = coordinates[0]
             distancia_g = ((x_2 - x_1) ** 2) + ((y_2 - y_1) ** 2)
             distancia_g = np.sqrt(distancia_g)
-            distance /= distancia_g
+            distance -= distancia_g*2
             
-            #corrobora que el nodo no sea uno ya visitado si es un nodo visitado el costo de devolverse es mayor al movimiento normal
-            if (y_2,x_2) in self.visited:
-                distance += 10
+        if(coordinates in self.visited):
+            distance += 10
+        #     #corrobora que el nodo no sea uno ya visitado si es un nodo visitado el costo de devolverse es mayor al movimiento normal
         return (distance/2.0)
 
    
